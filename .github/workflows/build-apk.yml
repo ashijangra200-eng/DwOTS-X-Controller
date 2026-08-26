@@ -13,25 +13,25 @@ jobs:
 
       - uses: actions/setup-java@v4
         with:
-          java-version: '17'
-          distribution: 'temurin'
+          distribution: temurin
+          java-version: 17
 
       - uses: android-actions/setup-android@v3
 
-      - name: Accept licenses and install SDK
+      - name: SDK setup
         run: |
           yes | sdkmanager --licenses || true
-          sdkmanager "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          sdkmanager "platforms;android-34" "build-tools;34.0.0" "platform-tools"
+          echo "sdk.dir=$ANDROID_HOME" > local.properties
 
       - uses: gradle/actions/setup-gradle@v4
         with:
-          gradle-version: '8.9'
+          gradle-version: 8.4
 
-      - name: Build Debug APK
+      - name: Build
         run: gradle assembleDebug --stacktrace
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v4
         with:
           name: DwOTS-X-Controller-APK
           path: app/build/outputs/apk/debug/*.apk
