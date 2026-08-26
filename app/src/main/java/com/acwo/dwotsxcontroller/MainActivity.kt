@@ -1,3 +1,4 @@
+
 package com.acwo.dwotsxcontroller
 
 import android.Manifest
@@ -106,13 +107,10 @@ fun AppScreen(ble: BleManager) {
                 Column(Modifier.fillMaxSize().padding(16.dp)) {
                     Button(
                         onClick = {
-    if (isScanning) ble.stopScan() else {
-        ble.loadBondedDevices()
-        val mgr = context.getSystemService(android.content.Context.BLUETOOTH_SERVICE) as BluetoothManager
-        if (mgr.adapter?.isEnabled == true) ble.startScan()
-        else context.startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
-    }
-}
+                            if (isScanning) {
+                                ble.stopScan()
+                            } else {
+                                ble.loadBondedDevices()
                                 val mgr = context.getSystemService(android.content.Context.BLUETOOTH_SERVICE) as BluetoothManager
                                 if (mgr.adapter?.isEnabled == true) ble.startScan()
                                 else context.startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
@@ -138,13 +136,11 @@ fun AppScreen(ble: BleManager) {
                                         Text(d.address, color = TextSecondary, fontSize = 12.sp, fontFamily = FontFamily.Monospace)
                                         Text("${d.rssi} dBm", color = TextSecondary, fontSize = 11.sp)
                                     }
-                                    if (true) {
-                                        Button(
-                                            onClick = { ble.connect(d.device) },
-                                            colors = ButtonDefaults.buttonColors(Magenta),
-                                            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)
-                                        ) { Text("CONNECT", fontSize = 12.sp, fontWeight = FontWeight.Bold) }
-                                    }
+                                    Button(
+                                        onClick = { ble.connect(d.device) },
+                                        colors = ButtonDefaults.buttonColors(Magenta),
+                                        contentPadding = PaddingValues(horizontal = 12.dp, vertical = 6.dp)
+                                    ) { Text("CONNECT", fontSize = 12.sp, fontWeight = FontWeight.Bold) }
                                 }
                             }
                         }
