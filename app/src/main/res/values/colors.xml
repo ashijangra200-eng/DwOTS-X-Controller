@@ -1,3 +1,4 @@
+
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="bg_dark">#0A0A0F</color>
@@ -10,4 +11,5 @@
     <color name="text_secondary">#A0A0B0</color>
     <color name="success">#00FF9D</color>
     <color name="error">#FF3B5C</color>
-    <color
+    <color name="warning">#FFB800</color>
+</resources>
