@@ -58,7 +58,7 @@ fun AppScreen(ble: BleManager) {
     val isScanning by ble.isScanning.collectAsState()
     val connectedName by ble.connectedDeviceName.collectAsState()
     var hasPermissions by remember { mutableStateOf(false) }
-    var tab by remember { mutableIntStateOf(0) }
+    var tab by remember { mutableStateOf(0) }
     val perms = arrayOf(
         Manifest.permission.BLUETOOTH_SCAN,
         Manifest.permission.BLUETOOTH_CONNECT,
