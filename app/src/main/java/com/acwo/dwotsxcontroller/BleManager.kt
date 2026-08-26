@@ -72,7 +72,16 @@ class BleManager(private val context: Context) {
         }
     }
 
-    fun startScan() {
+    fun loadBondedDevices() {
+    val bonded = adapter?.bondedDevices ?: emptySet()
+    val list = bonded.map { device ->
+        val name = device.name ?: "Unknown"
+        val isDwots = DWOTS_NAME_HINTS.any { name.contains(it, ignoreCase = true) }
+        ScannedDevice(device, name, device.address, 0, isDwots)
+    }.sortedWith(compareByDescending<ScannedDevice> { it.isDwotsX }.thenBy { it.name })
+    _scannedDevices.value = list
+    log("Bonded devices: ${list.size}")
+}
         if (adapter == null || !adapter.isEnabled) { log("Bluetooth off"); return }
         if (_isScanning.value) return
         _scannedDevices.value = emptyList()
