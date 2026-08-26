@@ -106,7 +106,13 @@ fun AppScreen(ble: BleManager) {
                 Column(Modifier.fillMaxSize().padding(16.dp)) {
                     Button(
                         onClick = {
-                            if (isScanning) ble.stopScan() else {
+    if (isScanning) ble.stopScan() else {
+        ble.loadBondedDevices()
+        val mgr = context.getSystemService(android.content.Context.BLUETOOTH_SERVICE) as BluetoothManager
+        if (mgr.adapter?.isEnabled == true) ble.startScan()
+        else context.startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
+    }
+}
                                 val mgr = context.getSystemService(android.content.Context.BLUETOOTH_SERVICE) as BluetoothManager
                                 if (mgr.adapter?.isEnabled == true) ble.startScan()
                                 else context.startActivity(Intent(Settings.ACTION_BLUETOOTH_SETTINGS))
@@ -132,7 +138,7 @@ fun AppScreen(ble: BleManager) {
                                         Text(d.address, color = TextSecondary, fontSize = 12.sp, fontFamily = FontFamily.Monospace)
                                         Text("${d.rssi} dBm", color = TextSecondary, fontSize = 11.sp)
                                     }
-                                    if (d.isDwotsX) {
+                                    if (true) {
                                         Button(
                                             onClick = { ble.connect(d.device) },
                                             colors = ButtonDefaults.buttonColors(Magenta),
