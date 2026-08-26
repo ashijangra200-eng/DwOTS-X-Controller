@@ -24,6 +24,10 @@ jobs:
           sdkmanager "platforms;android-34" "build-tools;34.0.0" "platform-tools"
           echo "sdk.dir=$ANDROID_HOME" > local.properties
 
+      - name: Fix colors.xml
+        run: |
+          printf '%s\n' '<resources>' '    <color name="bg_dark">#0A0A0F</color>' '    <color name="bg_card">#12121A</color>' '    <color name="bg_surface">#1A1A25</color>' '    <color name="accent_cyan">#00F0FF</color>' '    <color name="accent_magenta">#FF00E5</color>' '    <color name="accent_purple">#8B5CF6</color>' '    <color name="text_primary">#FFFFFF</color>' '    <color name="text_secondary">#A0A0B0</color>' '    <color name="success">#00FF9D</color>' '    <color name="error">#FF3B5C</color>' '    <color name="warning">#FFB800</color>' '</resources>' > app/src/main/res/values/colors.xml
+
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 8.4
